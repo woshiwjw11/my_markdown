@@ -57,5 +57,20 @@ function showpre(source){
 }
 ```
 
-### 
+### hasOwnProperty
+
+> hasOwnProperty是Object.prototype的一个方法，它可是个好东西，他能判断一个对象是否包含自定义属性而不是原型链上的属性，因为hasOwnProperty 是 JavaScript 中唯一一个处理属性但是不查找原型链的函数。
+
+```javascript
+// 修改Object.prototype
+Object.prototype.bar = 1; 
+var foo = {goo: undefined};
+
+foo.bar; // 1
+'bar' in foo; // true
+
+foo.hasOwnProperty('bar'); // false
+foo.hasOwnProperty('goo'); // true
+//当检查对象上某个属性是否存在时，hasOwnProperty 是唯一可用的方法。同时在使用 for in loop 遍历对象时，推荐总是使用 hasOwnProperty 方法，这将会避免原型对象扩展带来的干扰
+```
 
