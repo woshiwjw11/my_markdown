@@ -120,3 +120,97 @@ if(true){
 }
 //let 不允许重复声明
 ```
+### 什么是闭包
+
+> 闭包的作用使能够让一个函数从内部访问其外部函数的作用域。
+
+* 闭包使用的例子
+
+> 闭包的使用用途之一就是，将对对象数据的私有化。在 JavaScript 中，闭包是用来实现数据私有的原生机制。当你使用闭包来实现数据私有时，被封装的变量只能在闭包容器函数作用域中使用。例如：
+
+```javascript
+const getSecret = (secret) => {
+  return {
+    get: () => secret
+  };
+};
+
+test('Closure for object privacy.', assert => {
+  const msg = '.get() should have access to the closure.';
+  const expected = 1;
+  const obj = getSecret(1);
+
+  const actual = obj.get();
+
+  try {
+    assert.ok(secret, 'This throws an error.');
+  } catch (e) {
+    assert.ok(true, `The secret var is only available
+      to privileged methods.`);
+  }
+
+  assert.equal(actual, expected, msg);
+  assert.end();
+});
+```
+
+> 在上面的例子里，`get()` 方法定义在 `getSecret()` 作用域下，这让它可以访问任何 `getSecret()` 中的变量，于是它就是一个被授权的方法。在这个例子里，它可以访问参数 `secret`。
+>
+> 通过返回函数来获取外部函数的参数。这样就变成了一个私有变量。对于闭包的使用案例，和场景还有许多，需要更加深入的了解。
+
+### 理解js中this的含义
+
+```javascript
+function a(){
+    var user = "s";
+    console.log(this.user); //undefined
+    console.log(this); //Window
+}
+a();
+//由上述代码可以看得出，this指代的是最终调用它的对象。
+```
+
+> 情况1：如果一个函数中有this，但是它没有被上一级的对象所调用，那么this指向的就是window，这里需要说明的是在js的严格版中this指向的不是window。
+>
+> 情况2：如果一个函数中有this，这个函数有被上一级的对象所调用，那么this指向的就是上一级的对象。
+>
+> 情况3：如果一个函数中有this，**这个函数中包含多个对象，尽管这个函数是被最外层的对象所调用，this指向的也只是它上一级的对象**
+>
+> 例子如下所示：
+>
+> 
+
+```javascript
+var o = {
+    user:"11",
+    fn:function(){
+        console.log(this.user);  //11
+    }
+}
+o.fn();
+
+var o = {
+    a:10,
+    b:{
+        a:12,
+        fn:function(){
+            console.log(this.a); //12
+        }
+    }
+}
+o.b.fn();
+
+
+```
+
+* 构造函数版this
+
+```javascript
+function Fn(){
+    this.user = "s";
+}
+var a = new Fn();
+console.log(a.user); //s
+```
+
+> 这里之所以对象a可以点出函数Fn里面的user是因为new关键字可以改变this的指向，将这个this指向对象a，为什么我说a是对象，因为用了new关键字就是创建一个对象实例。
