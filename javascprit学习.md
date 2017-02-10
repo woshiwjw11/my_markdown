@@ -214,3 +214,20 @@ console.log(a.user); //s
 ```
 
 > 这里之所以对象a可以点出函数Fn里面的user是因为new关键字可以改变this的指向，将这个this指向对象a，为什么我说a是对象，因为用了new关键字就是创建一个对象实例。
+
+### 加快js加载和执行的速度
+
+> 1.在head之后选择加载js代码文件
+>
+> 2.无阻塞脚本，在HTML页面加载完毕后才进行脚本的下载。
+>
+> 3.延迟加载脚本，在script脚本中加入参数defer
+>
+> 4.动态加载脚本代码示例
+>
+> ```javascript
+> var script = document.createElement ("script"); 
+>    script.type = "text/javascript"; 
+>    script.src = "script1.js"; 
+>    document.getElementsByTagName("head")[0].appendChild(script);
+> ```
