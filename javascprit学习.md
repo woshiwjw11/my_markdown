@@ -231,3 +231,61 @@ console.log(a.user); //s
 >    script.src = "script1.js"; 
 >    document.getElementsByTagName("head")[0].appendChild(script);
 > ```
+
+### iframe
+
+> ```html
+> <iframe src="demo_iframe_sandbox.htm"></iframe>//最基本的iframe用法
+> ```
+
+> iframe标签中的属性：
+>
+> ```
+> 1.frameborder:是否显示边框，1(yes),0(no)
+>
+> 2.height:框架作为一个普通元素的高度，建议在使用css设置。
+>
+> 3.width:框架作为一个普通元素的宽度，建议使用css设置。
+>
+> 4.name:框架的名称，window.frames[name]时专用的属性。
+>
+> 5.scrolling:框架的是否滚动。yes,no,auto。
+>
+> 6.src：内框架的地址，可以使页面地址，也可以是图片的地址。
+> 7.srcdoc , 用来替代原来HTML body里面的内容。但是IE不支持, 不过也没什么卵用
+> 8.sandbox: 对iframe进行一些列限制，IE10+支持
+> ```
+
+* 如何获取iframe中的内容
+
+> 主要利用两个api来进行获取
+>
+> contentWindow获取iframe的window对象
+>
+> contentDocument获取iframe的document对象
+>
+> 示例
+
+```javascript
+var iframe = document.getElementById("iframe1");
+ var iwindow = iframe.contentWindow;
+ var idoc = iwindow.document;
+        console.log("window",iwindow);//获取iframe的window对象
+        console.log("document",idoc);  //获取iframe的document
+        console.log("html",idoc.documentElement);//获取iframe的html
+        console.log("head",idoc.head);  //获取head
+        console.log("body",idoc.body);  //获取body
+```
+
+> 通过name的方式
+
+```html
+<iframe src ="/index.html" id="ifr1" name="ifr1" scrolling="yes">
+  <p>Your browser does not support iframes.</p>
+</iframe>
+<script type="text/javascript">
+    console.log(window.frames['ifr1'].window);
+console.dir(document.getElementById("ifr1").contentWindow);
+</script>
+```
+
