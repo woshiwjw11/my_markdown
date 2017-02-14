@@ -289,3 +289,23 @@ console.dir(document.getElementById("ifr1").contentWindow);
 </script>
 ```
 
+### 采用localStorage/sessionStorage来保存数据
+
+* 原理localStorage/sessionStorage都是一个本地存储数据接口。唯一的差别是时效，localStorage是永久存在本地的，就算关闭浏览器，也不会删除数据。sessionStorage 也是持久保存，唯一的差别是，在重启浏览器的时候，会清空数据。
+* 使用方法
+
+```javascript
+ localStorage.setItem('localData','localStorage test data');//设置数据
+    var localData = localStorage.getItem('localData');//取出数据
+    sessionStorage.setItem('sessionData','session test data');//设置数据
+    var sessionData = sessionStorage.getItem('sessionData');//取出数据
+```
+
+* 使用场景ocalStorage/sessionStorage适合保存那种在较九不需要修改的数据信息，比如用户登陆网站的配置信息等！而不适合保存一次性数据！
+
+```javascript
+localStorage.removeItem('localData');//删除数据
+    sessionStorage.removeItem('sessionData');//删除数据
+```
+
+* 在关闭浏览器的时候选择将数据进行清除。这样就能够更好的进行操作。
