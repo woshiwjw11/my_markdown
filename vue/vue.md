@@ -96,4 +96,49 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 >
 > 在运用完毕之后利用router-view来进行页面的跳转展示。
 
-s
+## header组件开发
+
+* vue-resource 的使用
+
+![resource](./resource.png)
+
+> 通过这个方法对数据进行请求，由于这里是mock的数据，当实际情况时就可以进行更改。其中的一个问题，就是.json()方法返回的现在已经不是object对象了
+
+* header组件主要结构如下图所示
+
+![结构](./header.png)
+
+> 根据设计稿布局出相应的页面在这个其中还用到了一个新的子组件那就是star
+
+* star组件的结构如下图所示
+
+![star](./star.png)
+
+> 在star组件中最重要的就是将评分的星星合理的动态展示出来，这里用到的方法主要是通过传入参数，来进行参数计算主要代码如下：
+
+![star1](./jisuanstar.png)
+
+> 主要通过设定一个数组，来计算传入的分数，然后计算星星全颗的半颗的和全暗的数量，从而来展示响应的星星。
+
+* header小词条
+
+![词条](./citiao.png)
+
+```html
+<div v-if="seller.supports" class="support">
+          <span class="icon" :class="classMap[seller.supports[1].type]"></span>
+          <!-- 根据class来显示合适的图片以及下面的文字描述内容。 -->
+          <span class="text">{{seller.supports[1].description}}</span>
+        </div>
+```
+
+> 由上述代码所示，根据相对应的type来展示相对应的小图标
+
+* 最终实现header组件的成果如下
+
+![jieguo](./header1.png)
+
+![jieguo2](./header2.png)
+
+## goods 组件的开发
+
