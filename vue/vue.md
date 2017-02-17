@@ -142,3 +142,124 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 
 ## goods 组件的开发
 
+> 开发goods组件中需要首先根据分析，又把good组件分成了三个小的组件
+
+* goods组件
+* shopcart子组件表示购物车部分
+* cartcontrol子组件表示数量加减的部分
+
+### goods组件部分
+
+> goods组件主要分成两块，一块是菜单部分，另外一块是食物列表的部分
+
+* menu菜单部分
+
+> 1.通过v-for循环遍历goods来列出所有的菜单。 goods的数据来源通过vue-resource来进行获取
+>
+> ```javascript
+> this.$http.get('/api/goods').then((response) => {
+>         console.log(response.body);
+>         response=response.body;
+>         if (response.errno === 0) {
+>           this.goods=response.data;
+>           console.log(this.goods);
+>           this.$nextTick(() => { // dom 更新以后执行
+>             this._initScroll();
+>             this._calculateHeight();
+>           });
+>         }
+>       });
+>
+> ```
+
+> 2.要显示小图标，通过v-show这个指令来判断是否有并且展示出来
+
+* food内容部分
+
+> 1.和菜单记录一样，通过v-for循环遍历出来所有的数据列表
+
+![结构](./goods_menu.png)
+
+> goods主要内容区域的结构内容如上图所示
+
+* 拖动的插件better-scroll
+
+![scroll插件的初始化](./scroll.png)
+
+
+
+> 首先要计算出偏移的值然后通过selectMenu方法根据点击来竖直移动相对应的foodlist
+
+![选择菜单](./selectMenu.png)
+
+> 在开发这里基本都是利用数据来进行驱动，不过有几个地方是要使用到dom的。
+>
+> v-el在vue1.0中是用来绑定dom结构的，但是，在vue2.0中已经被废弃了，我这里主要还是进行1.0的开发，所以还是使用的v-el
+>
+> 这里使用的方法是这样的在div中使用v-el:"name" 在方法中调用的形式是
+>
+> this.els.name  这里需要注意的是在html结构中要使用羊肉串命名，例如name-one 在js中要使用驼峰命名法。
+
+* 注意点
+
+  > 因为在vue中没有dom的概念，在执行时需要加上this.$nextTick()来监听dom更新时的状态。
+
+### shopcart组件部分
+
+> shopcart 主要由两个部分组成，一个部分是购物车 的部分一部分是结算的部分
+
+![shopcart](./shopcart.png)
+
+>  页面结构如图所示。
+>
+> 这里有一个部分是显示出半圆的结构那么这个结构使用了一个小技巧在计算盒模型大小的时候使用了IE的盒模型来显示半圆，
+>
+> box-sizing:border-box
+>
+> 通过这一的设置展现出来半圆形突出来
+
+* shopcart-list
+
+> 这里需要遍历所选择的食物并且展示出来。首先要有selectfood这个数据。通过props来接受这个数据
+>
+> 并且通过判断其中是否有数据，来表示是否展现出这个购物车详情页面
+>
+> ```javascript
+> toggleList() {
+>         if (!this.totalCount) {
+>           return;
+>         }
+>         this.fold=!this.fold;
+>       }
+> ```
+
+* 在这里遇到的一个问题
+
+> 在购物车详情页面中，也需要将better-scroll插件引入，在引入这个插件的过程中也需要获取dom页面，不知道为什么this.els.listContent获取到的数据为undefind ，但是获取this.els是可以获取到的，一时间不知道如何解决这个，之后我改变了了语句使用了如下语句
+>
+> this.$els["'listContent'"]通过这一的语句我获得了相对应的变量
+>
+> 剩下的基本上都是根据数据来驱动变化
+
+### cartcontrol组件
+
+> 这个组件主要是加减商品的
+
+![加减](./cart.png)
+
+> 其结构图如上图所示。这里主要就是写了两个方法，将count加减展示出来。
+>
+> 这个部分还有一个问题就是动画部分还没有实现，先留下一个坑过后再填
+
+### 界面展示
+
+![界面展示](./goos.png)
+
+
+
+![jiemian](./goods2.png)
+
+> 以上就是goods组件的开发过程
+
+
+
