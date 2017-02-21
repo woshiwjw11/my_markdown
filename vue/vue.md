@@ -212,11 +212,11 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 
 >  页面结构如图所示。
 >
-> 这里有一个部分是显示出半圆的结构那么这个结构使用了一个小技巧在计算盒模型大小的时候使用了IE的盒模型来显示半圆，
+>  这里有一个部分是显示出半圆的结构那么这个结构使用了一个小技巧在计算盒模型大小的时候使用了IE的盒模型来显示半圆，
 >
-> box-sizing:border-box
+>  box-sizing:border-box
 >
-> 通过这一的设置展现出来半圆形突出来
+>  通过这一的设置展现出来半圆形突出来
 
 * shopcart-list
 
@@ -260,6 +260,47 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 ![jiemian](./goods2.png)
 
 > 以上就是goods组件的开发过程
+
+## food组件的开发
+
+> food组件主要是商品点击的时候，所展现的商品详情页面。
+>
+> ![商品详情](./detail.png)
+>
+> 界面详情就是这样子了。
+>
+> ![code](./detail_code.png)
+>
+> 页面结构如上图所示。
+
+* 因为是需要在点击的时候，导入详情页面，需要在goods中引入food组件，并且设置层级覆盖在页面之上。
+* food组件中需要使用的数据，是food。所以需要props:接收数据。在goods组件中绑定food数据。绑定的数据是选中的数据，传入。
+* food组件默认隐藏。当点击事件的时候，显示。
+* 加入购物车需要引入cartcontrol组件，并且当food.count为0的时候显示加入购物车这几个字。
+
+```javascript
+//加入购物车需要绑定一个方法，第一次加入时增加food.count
+addFirst(event) {
+  			if (!event._constructed) {
+  				return;
+  			}
+  			Vue.set(this.food, 'count', 1);
+  		}
+```
+
+> 通过绑定事件，设置food的值。
+
+### food里的评价页面
+
+* 开发ratingselect组件，评价页面主要就是一个选项卡的组件通过type的判断，来显示相对应的评价内容。
+
+![selectraring](./selectrating.png)
+
+> selectrating 的主要结构上图所示。具体方法都在代码中。
+
+
+
+
 
 
 
