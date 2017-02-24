@@ -327,3 +327,44 @@ localStorage.removeItem('localData');//删除数据
 >   return x*x;
 > }
 > ```
+
+###  JS实现数组去重
+
+1
+
+> 一般的方法
+>
+> ```javascript
+> //一般方法->使用indexOf
+> Array.prototype.unique = function(){
+>     var newArr = [];
+>     //此处改进一下就是直接把第一个元素先放入新数组中，可以减少一次遍历，也就是说var newArr = [this[0]]
+>     var len = this.length;
+>     for(var i = 0;i < len; i++){
+>         if(newArr.indexOf(this[i]) == -1){
+>             newArr.push(this[i]);
+>         }
+>     }
+>     return newArr;
+> }
+> ```
+
+2
+
+> 另外一种方式
+>
+> ```javascript
+> Array.prototype.unique = function(){
+>           //先对数组做一个排序，这样使得一样的数据就会挨在一起
+>     this.sort();
+>     var newArr = [this[0]], len = this.length;
+>     for(var i = 0; i < len; i++){
+>         if(this[i] !== newArr[newArr.length - 1]){
+>             newArr.push(this[i]);
+>         }
+>     }
+>     return newArr;
+> }
+> ```
+>
+> 
